@@ -17,3 +17,12 @@ development:
   database: movieRama
   username: mindbots
   password: mindbots
+
+production:
+  <<: *default
+  adapter:  postgresql
+  host:     ec2-54-217-217-142.eu-west-1.compute.amazonaws.com
+  encoding: unicode
+  database: ded6kakikf86mj
+  username: swayfuuowthojf
+  password: fdf5389261b974a81a7ab34964d51ef440e99d68b5a5d7d86fd6610c478f4e91
