@@ -6,7 +6,7 @@ class MoviesController < ApplicationController
   # GET /movies
   # GET /movies.json
   def index
-    order_by = params[:order_by] || 'created_at'
+    order_by = params[:order_by]
     order_direction = params[:order] || 'DESC'
     if params[:movies_by_user_id] 
       @movies = User.find(params[:movies_by_user_id]).movies
@@ -18,9 +18,11 @@ class MoviesController < ApplicationController
       @movies = @movies.left_outer_joins(:movie_reactions).select('movies.*, (Select count(*) from movie_reactions WHERE movie_id = movies.id AND liked = TRUE ) AS likes').group('movies.id').order("likes #{order_direction}")
     elsif order_by == "hates"
       @movies = @movies.left_outer_joins(:movie_reactions).select('movies.*, (Select count(*) from movie_reactions WHERE movie_id = movies.id AND liked = FALSE ) AS hates').group('movies.id').order("hates #{order_direction}")
-    elsif order_by == "created_at"
-      @movies = @movies.all.order("#{order_by} #{order_direction}")
+    elsif order_by == "date"
+      @movies = @movies.order("created_at #{order_direction}")
     end
+
+    @movies = @movies.page movie_params[:page]
   end
 
   # GET /movies/1
@@ -112,6 +114,6 @@ class MoviesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def movie_params
-      params.require(:movie).permit(:title, :description, :order_by, :order, :movies_by_user_id, :reaction)
+      params.permit(:title, :description, :order_by, :order, :movies_by_user_id, :reaction, :search, :page)
     end
 end

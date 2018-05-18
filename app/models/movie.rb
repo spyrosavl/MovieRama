@@ -7,6 +7,7 @@ class Movie < ApplicationRecord
 	belongs_to :user
 	validates :title, :description, presence: true
 	has_many :movie_reactions, :dependent => :delete_all
+	paginates_per 10
 
 	def likes
 		self.movie_reactions.where(liked: true).count || 0

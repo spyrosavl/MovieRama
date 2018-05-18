@@ -28,6 +28,12 @@
               |
             </li>
             <li class="nav-item">
+              <a href="/movies?movies_by_user_id=<%=current_user.id%>">my movies</a>
+            </li>
+            <li class="nav-item" style="margin: 0px 5px;">
+              |
+            </li>
+            <li class="nav-item">
               <strong>Welcome back <%= link_to current_user.name, edit_user_registration_path(current_user) %></strong>
             </li>
             <% else %>

@@ -1,10 +1,28 @@
 <nav aria-label="breadcrumb" class="sorter">
   <ul class="breadcrumb">
     <li>Sort by:</li>
-    <li><%= link_to 'likes', request.params.merge(order_by: "likes") %></li>
+    <%if request.params[:order_by] == "likes" && request.params.include?(:order) && request.params[:order] == "ASC" %>
+    	<li><%= link_to 'likes (asc)', request.params.merge(order_by: "likes", order: "DESC") %></li>
+    <%elsif request.params[:order_by] == "likes"%>
+    	<li><%= link_to 'likes (desc)', request.params.merge(order_by: "likes", order: "ASC") %></li>
+    <%else%>
+    	<li><%= link_to raw('likes'), request.params.merge(order_by: "likes", order: "DESC") %></li>
+    <%end%>
     <li>|</li>
-    <li><%= link_to 'hates', request.params.merge(order_by: "hates") %></li>
+    <%if request.params[:order_by] == "hates" && request.params.include?(:order) && request.params[:order] == "ASC" %>
+    	<li><%= link_to 'hates (asc)', request.params.merge(order_by: "hates", order: "DESC") %></li>
+    <%elsif request.params[:order_by] == "hates"%>
+    	<li><%= link_to 'hates (desc)', request.params.merge(order_by: "hates", order: "ASC") %></li>
+    <%else%>
+    	<li><%= link_to raw('hates'), request.params.merge(order_by: "hates", order: "DESC") %></li>
+    <%end%>
     <li>|</li>
-    <li><%= link_to 'date', request.params.merge(order_by: "created_at") %></li>
+    <%if request.params[:order_by] == "date" && request.params.include?(:order) && request.params[:order] == "ASC" %>
+    	<li><%= link_to 'date (asc)', request.params.merge(order_by: "date", order: "DESC") %></li>
+    <%elsif request.params[:order_by] == "date"%>
+    	<li><%= link_to 'date (desc)', request.params.merge(order_by: "date", order: "ASC") %></li>
+    <%else%>
+    	<li><%= link_to raw('date'), request.params.merge(order_by: "date", order: "DESC") %></li>
+    <%end%>
   </ul>
 </nav>
