@@ -1,0 +1,17 @@
+<h3>Log in</h3>
+
+
+<%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+  <div class="form-group">
+    <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control form-control-lg", placeholder: "email", required: true %>
+    <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+  </div>
+  <div class="form-group">
+    <%= f.password_field :password, autocomplete: "off", class: "form-control form-control-lg", placeholder: "password", required: true %>
+  </div>
+  <br/>
+  <button type="submit" class="btn btn-primary btn-lg float-right">Sign In</button>
+
+<% end %>
+
+<%= render "devise/shared/links" %>

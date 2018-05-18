@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../../../favicon.ico">
+    <title>MovieRama</title>
+    <%= csrf_meta_tags %>
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+  <body>
+    <div class="container">
+      <nav class="navbar navbar-expand-lg navbar-light bg-light rounded">
+        <a href="/" class="navbar-brand" href="#">MovieRama</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample09" aria-controls="navbarsExample09" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse flex-row-reverse" id="">
+          <ul class="navbar-nav flex-row-reverse">
+            <% if current_user %>
+            <li class="nav-item">
+              <%= link_to "Sign out", destroy_user_session_path, method: :delete %><br />
+            </li>
+            <li class="nav-item" style="margin: 0px 5px;">
+              |
+            </li>
+            <li class="nav-item">
+              <strong>Welcome back <%= link_to current_user.name, edit_user_registration_path(current_user) %></strong>
+            </li>
+            <% else %>
+            <li class="nav-item" style="font-size: 1.1rem;">
+              <%= link_to "Sign up", new_user_registration_path %><br />
+            </li>
+            <li class="nav-item" style="margin: 0px 5px;font-size: 1.1rem;">
+              or
+            </li>
+            <li class="nav-item" style="font-size: 1.1rem;">
+              <%= link_to "Login", new_user_session_path %><br />
+            </li>
+            <% end %>
+          </ul>
+        </div>
+      </nav>
+      <dir class="container">
+        <div class="row">
+          <div class="col-12">
+            <% if notice %>
+              <div class="alert alert-info alert-dismissible fade show" role="alert">
+                <%= notice %>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+            <% end %>
+            <% if alert %>
+              <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <%= alert %>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+            <% end %>
+          </div>
+        </div>
+        <%= yield %>
+      </dir>
+    </div>
+  </body>
+</html>

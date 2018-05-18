@@ -1,0 +1,30 @@
+var output = $(".movieReactionsWrapper[data-movieid='<%= @public_movie.id %>']");
+var likes = <%= @public_movie.likes %>;
+var dislikes = <%= @public_movie.dislikes %>;
+var liked = <%= @action_to_do == "like" %>;
+var unliked = <%= @action_to_do == "hate" %>;
+var outputString = "";
+
+if(likes>0 || dislikes>0){
+	outputString = (likes.toString() + " likes " + dislikes.toString() + " hates");
+}else{
+	outputString = ('<span style="font-weight: 500">Be the first to like or hate</span>');
+}
+
+outputString += '<span style="margin: 0px 10px;">|</span>';
+
+if (liked) {
+	outputString += '<a class="movieReaction" data-remote="true" rel="nofollow" data-method="post" href="/movies/<%= @public_movie.id %>/remove">unlike</a>';
+	outputString += '<span style="margin: 0px 5px;"></span>';
+	outputString += '<a class="movieReaction" data-remote="true" rel="nofollow" data-method="post" href="/movies/<%= @public_movie.id %>/hate">hate</a>';
+}else if(unliked){
+	outputString += '<a class="movieReaction" data-remote="true" rel="nofollow" data-method="post" href="/movies/<%= @public_movie.id %>/like">like</a>';
+	outputString += '<span style="margin: 0px 5px;"></span>';
+	outputString += '<a class="movieReaction" data-remote="true" rel="nofollow" data-method="post" href="/movies/<%= @public_movie.id %>/remove">unhate</a>';
+}else{
+	outputString += '<a class="movieReaction" data-remote="true" rel="nofollow" data-method="post" href="/movies/<%= @public_movie.id %>/like">like</a>';
+	outputString += '<span style="margin: 0px 5px;"></span>';
+	outputString += '<a class="movieReaction" data-remote="true" rel="nofollow" data-method="post" href="/movies/<%= @public_movie.id %>/hate">hate</a>';
+}
+
+output.html(outputString);

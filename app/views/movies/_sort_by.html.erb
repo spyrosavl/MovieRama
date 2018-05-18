@@ -1,0 +1,10 @@
+<nav aria-label="breadcrumb" class="sorter">
+  <ul class="breadcrumb">
+    <li>Sort by:</li>
+    <li><%= link_to 'likes', request.params.merge(order_by: "likes") %></li>
+    <li>|</li>
+    <li><%= link_to 'hates', request.params.merge(order_by: "hates") %></li>
+    <li>|</li>
+    <li><%= link_to 'date', request.params.merge(order_by: "created_at") %></li>
+  </ul>
+</nav>

@@ -1,0 +1,82 @@
+<div class="row">
+  <div class="col-9">
+    <%= render 'sort_by' %>
+  </div>
+</div>
+
+<div class="row">
+    <div class="col-9">
+        <% if @movies.all.length == 0 %>
+          <div class="jumbotron">
+            <h5 class="display-4">No movies yet! :/</h5>
+          </div>
+        <% end %> 
+
+        <% @movies.each do |movie| %>
+
+          <div class="card" style="width: 90%;">
+
+            <div class="card-body">
+              <h5 class="card-title"><%= movie.title %></h5>
+              <h6 class="card-subtitle mb-2 text-muted">
+                by <a href="/movies?movies_by_user_id=<%=movie.user_id%>"><%= User.find(movie.user_id).name %></a>
+                <% if (timePassed = (Time.current() - movie.created_at)/60) > 24*60 %> 
+                  <%= "before #{(timePassed/(24*60)).floor} days" %>
+                <% elsif timePassed > 60 %>
+                  <%= "before #{(timePassed/60).floor} hours" %>
+                <% else %>
+                  <%= "before #{(timePassed).floor} minutes" %>
+                <% end %>
+              </h6>
+              <p class="card-text"><%= movie.description %></p>
+            </div>
+
+            <div class="card-footer text-muted">
+
+              <div class="movieReactionsWrapper" data-movieid="<%= movie.id %>">
+              <% if current_user.nil? || (current_user.id == movie.user_id) || (movie.likes>0 || movie.dislikes>0) %>
+                  <%= movie.likes %> likes <%= movie.dislikes %> hates
+              <%else%>
+                  <span style="font-weight: 500">Be the first to like or hate</span>
+              <%end%>  
+
+              <% if (current_user && current_user.id != movie.user_id) %>
+                <span style="margin: 0px 10px;">|</span>
+
+                <% if current_user.movie_reactions.exists?(movie_id: movie.id, liked: true) %>
+                  <%= link_to "unlike",  react_to_movie_path(movie, "remove"), method: :post, remote: true, class: "movieReaction" %>
+                <%else%>
+                  <%= link_to "like",  react_to_movie_path(movie, "like"), method: :post, remote: true, class: "movieReaction" %>
+                <%end%>
+
+                <span style="margin: 0px 5px;"></span>
+                
+                <% if current_user.movie_reactions.exists?(movie_id: movie.id, liked: false) %>
+                  <%= link_to "unhate",  react_to_movie_path(movie, "remove"), method: :post, remote: true, class: "movieReaction" %>
+                <%else%>
+                  <%= link_to "hate",  react_to_movie_path(movie, "hate"), method: :post, remote: true, class: "movieReaction" %>
+                <%end%>
+
+              <%end%>
+              </div>
+
+              <!-- edit or remove movie -->
+              <% if (current_user && current_user.id == movie.user_id) %>
+                <%= link_to "delete", movie, class: "float-right", method: :delete, data: { confirm: 'Are you sure?' }, style: "margin-left:10px; color: red;" %>
+                <%= link_to "edit",  edit_movie_path(movie), class: "float-right" %>
+              <%end%>
+            </div>
+
+          </div>
+
+        <%end%>
+
+    </div>
+
+    <div class="col-3">
+      <% if current_user %>
+        <%= link_to 'Create New Movie', new_movie_path, class: "btn btn-success btn-lg" %>
+      <%end%>
+    </div>
+
+</div>
