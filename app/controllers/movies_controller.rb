@@ -7,7 +7,7 @@ class MoviesController < ApplicationController
   # GET /movies.json
   def index
     order_by = params[:order_by]
-    order_direction = params[:order] || 'DESC'
+    order_direction = ['DESC', 'ASC'].include?(params[:order]) ? params[:order] : "DESC"
     if params[:movies_by_user_id] 
       @movies = User.find(params[:movies_by_user_id]).movies
     else
