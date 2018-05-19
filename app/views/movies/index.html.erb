@@ -11,6 +11,9 @@
 
 <div class="row">
     <div class="col-md-9 col-sm-12">
+        <% if @movies_owner %>
+            <h3>Movies from user: <%=@movies_owner.name%></h3>
+        <%end%>
         <% if @movies.length == 0 %>
           <div class="jumbotron" style="width: 100%;">
             <h5 class="display-4">No movies yet! :/</h5>
@@ -76,7 +79,7 @@
 
         <%end%>
 
-    <div style="width: 70%;"><%= paginate @movies %></div>
+    <div style="width: 100%;"><%= paginate @movies, window: 2 %></div>
     </div>
 
 </div>

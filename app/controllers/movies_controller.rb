@@ -8,8 +8,9 @@ class MoviesController < ApplicationController
   def index
     order_by = params[:order_by]
     order_direction = ['DESC', 'ASC'].include?(params[:order]) ? params[:order] : "DESC"
-    if params[:movies_by_user_id] 
-      @movies = User.find(params[:movies_by_user_id]).movies
+    if params[:movies_by_user_id]
+      @movies_owner =  User.find(params[:movies_by_user_id])
+      @movies = @movies_owner.movies
     else
       @movies = Movie.all
     end
