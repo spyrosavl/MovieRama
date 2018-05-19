@@ -1,0 +1,28 @@
+# SQLite version 3.x
+#   gem install sqlite3
+#
+#   Ensure the SQLite 3 gem is defined in your Gemfile
+#   gem 'sqlite3'
+#
+default: &default
+  adapter: postgresql
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  timeout: 5000
+
+development:
+  <<: *default
+  adapter:  postgresql
+  host:     localhost
+  encoding: unicode
+  database: movieRama
+  username: mindbots
+  password: mindbots
+
+production:
+  <<: *default
+  adapter:  postgresql
+  host:     ec2-54-217-217-142.eu-west-1.compute.amazonaws.com
+  encoding: unicode
+  database: ded6kakikf86mj
+  username: swayfuuowthojf
+  password: fdf5389261b974a81a7ab34964d51ef440e99d68b5a5d7d86fd6610c478f4e91
